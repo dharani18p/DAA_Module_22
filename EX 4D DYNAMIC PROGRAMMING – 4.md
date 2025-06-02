@@ -1,55 +1,42 @@
-# EX 4C DYNAMIC PROGRAMMING – 3
+# EX 4D DYNAMIC PROGRAMMING – 4
 ## DATE:
 ## AIM:
-Given a sequence, find the length of the longest palindromic subsequence in it.
+To find the minimum number of operations to convert str1 to str2 using Naive recursive method.
 
 ## Algorithm
-1.Input the string → Take the string for which you want to find the longest palindromic subsequence.
+1.Take two words as input.
 
-2.Create a 2D table (dp) → dp[i][j] will store the length of the LPS between index i and j in the string.
+2.If one word is empty → return the length of the other word (just insert or delete all letters).
 
-3.Initialize → Set all dp[i][i] = 1 because a single character is always a palindrome of length 1.
+3.If last letters of both words are same → move to the rest of the words.
 
-4.Check substrings of length 2 or more.
+4.If last letters are different → Changing a letter, Adding a letter, Removing a letter
 
-5.For every substring:If the characters at the start and end are the same:dp[i][j] = dp[i+1][j-1] + 2
+5.Repeat until both words are finished.
 
-6.If they are different:dp[i][j] = max(dp[i+1][j], dp[i][j-1])
-
-7.The value in dp[0][n-1] (first to last index) is the length of the Longest Palindromic Subsequence.
-
-8.Print the result.  
-
+6.Print the smallest number of steps to change one word into the other.
 ## Program:
 ```
 # Developed by: Dharani P
 # Register Number: 212222220011
 
-
-def Lps(X):
-    n=len(X)
-    dp=[[0 for _ in range(n)] for _ in range(n)]
+def ed(x,y,m,n):
+    if m==0:
+        return n
+    if n==0:
+        return m
+    if x[m-1]==y[n-1]:
+        return ed(x,y,m-1,n-1)
+    return 1+min(ed(x,y,m-1,n-1),ed(x,y,m,n-1),ed(x,y,m-1,n))
     
-    for x in range(n):
-        dp[x][x]=1
-        
-    for l in range(2,n+1):
-        for i in range(n-l+1):
-            j=i+l-1
-            if X[i]==X[j]:
-                dp[i][j]=dp[i+1][j-1]+2
-            else:
-                dp[i][j]=max(dp[i+1][j],dp[i][j-1])
-    return dp[0][n-1]
-    
-X=input()
-print("The length of the LPS is",Lps(X))
-
+x=input()
+y=input()
+print("Edit Distance",ed(x,y,len(x),len(y)))
 ```
 
 ## Output:
+![447227597-2b276bd1-20e4-4935-81d2-91c4b1b65cf8](https://github.com/user-attachments/assets/600beecb-eb5c-4ab5-b419-73e4f3ef5648)
 
-![447227429-864b0e3e-6b76-4646-a075-fce4bac608a4](https://github.com/user-attachments/assets/69389c28-68de-477b-b583-ac9e62bb7a18)
 
 ## Result:
-Thus the program was executed successfully for finding the length of longest palindromic string.
+Thus the program was executed successfully for finding edit distance between two strings.
